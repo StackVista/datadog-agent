@@ -20,7 +20,7 @@ func tryParseYamlToMap(data *C.char) (map[string]interface{}, error) {
 		return nil, err
 	}
 
-	result, err := convertKeysToString(_data)
+	result, err := ConvertKeysToString(_data)
 
 	if err == nil {
 		return result.(map[string]interface{}), nil
@@ -29,15 +29,15 @@ func tryParseYamlToMap(data *C.char) (map[string]interface{}, error) {
 	return nil, err
 }
 
-// Recursively cast all the keys of all maps to string
-func convertKeysToString(i interface{}) (interface{}, error) {
+// ConvertKeysToString recursively cast all the keys of all maps to string
+func ConvertKeysToString(i interface{}) (interface{}, error) {
 	switch x := i.(type) {
 	case map[interface{}]interface{}:
 		m2 := map[string]interface{}{}
 		for k, v := range x {
 			switch keyString := k.(type) {
 			case string:
-				value, err := convertKeysToString(v)
+				value, err := ConvertKeysToString(v)
 				if err == nil {
 					m2[keyString] = value
 				} else {
@@ -51,7 +51,7 @@ func convertKeysToString(i interface{}) (interface{}, error) {
 	case []interface{}:
 		a2 := make([]interface{}, len(x))
 		for i, v := range x {
-			value, err := convertKeysToString(v)
+			value, err := ConvertKeysToString(v)
 			if err == nil {
 				a2[i] = value
 			} else {

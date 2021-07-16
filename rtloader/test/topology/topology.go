@@ -2,6 +2,7 @@ package testtopology
 
 import (
 	"fmt"
+	"github.com/StackVista/stackstate-agent/pkg/collector/python"
 	"io/ioutil"
 	"log"
 	"os"
@@ -37,6 +38,7 @@ var (
 	checkID			string
 	_instance		*Instance
 	_data			map[string]interface{}
+	result          map[string]interface{}
 	_externalID		string
 	_componentType	string
 	_sourceID		string
@@ -53,6 +55,7 @@ func resetOuputValues() {
 	checkID = ""
 	_instance = nil
 	_data = nil
+	result = nil
 	_externalID = ""
 	_componentType = ""
 	_sourceID = ""
@@ -130,6 +133,8 @@ func submitComponent(id *C.char, instanceKey *C.instance_key_t, externalID *C.ch
 	_componentType = C.GoString(componentType)
 	_data = make(map[string]interface{})
 	yaml.Unmarshal([]byte(C.GoString(data)), _data)
+	r, _ := python.ConvertKeysToString(_data)
+	result = r.(map[string]interface{})
 }
 
 //export submitRelation
@@ -149,6 +154,8 @@ func submitRelation(id *C.char, instanceKey *C.instance_key_t, sourceID *C.char,
 
 	_data = make(map[string]interface{})
 	yaml.Unmarshal([]byte(C.GoString(data)), _data)
+	r, _ := python.ConvertKeysToString(_data)
+	result = r.(map[string]interface{})
 }
 
 //export submitStartSnapshot

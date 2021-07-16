@@ -50,7 +50,7 @@ func SubmitTopologyEvent(id *C.char, data *C.char) {
 			_ = log.Error(err)
 			return
 		}
-
+		topologyEvent.FillEventContextDefaults()
 		sender.Event(topologyEvent)
 	} else {
 		_ = log.Errorf("Empty topology event not sent. Json: %v, Error: %v", _json, err)

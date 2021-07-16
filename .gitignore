@@ -159,6 +159,9 @@ version.txt
 # molecule local json files
 /test/molecule-role/molecule/*/topic-*.json
 
+# ignore manual test files
+test/manual/*
+
 # cluster agent generated files
 Dockerfiles/cluster-agent/stackstate-cluster.yaml
 Dockerfiles/cluster-agent/auth_token

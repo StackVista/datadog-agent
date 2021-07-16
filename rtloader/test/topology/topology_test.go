@@ -22,7 +22,7 @@ func TestMain(m *testing.M) {
 const topoData = `
 {
   "key": "value ®",
-  "stringlist": ["a", "b", "c"],
+  "stringlist": ["a", "b", "c", "4"],
   "boollist": [True, False],
   "intlist": [1],
   "doublelist": [0.7, 1.42],
@@ -31,44 +31,44 @@ const topoData = `
 }`
 
 func testTopoData(t *testing.T) {
-	if _data["key"] != "value ®" {
-		t.Fatalf("Unexpected component data 'key' value: %s", _data["key"])
+	if result["key"] != "value ®" {
+		t.Fatalf("Unexpected component data 'key' value: %s", result["key"])
 	}
-	var stringlist = _data["stringlist"].([]interface{})
-	if len(stringlist) != 3 {
+	var stringlist = result["stringlist"].([]interface{})
+	if len(stringlist) != 4 {
 		t.Fatalf("Unexpected component data 'stringlist' size: %v", len(stringlist))
 	}
-	if stringlist[0] != "a" && stringlist[1] != "b"  && stringlist[2] != "c" {
-		t.Fatalf("Unexpected component data 'stringlist' value: %s", _data["stringlist"])
+	if stringlist[0] != "a" && stringlist[1] != "b"  && stringlist[2] != "c" && stringlist[3] != "4" {
+		t.Fatalf("Unexpected component data 'stringlist' value: %s", result["stringlist"])
 	}
-	var boollist = _data["boollist"].([]interface{})
+	var boollist = result["boollist"].([]interface{})
 	if len(boollist) != 2 {
 		t.Fatalf("Unexpected component data 'boollist' size: %v", len(boollist))
 	}
 	if boollist[0] != true && boollist[1] != false {
-		t.Fatalf("Unexpected component data 'boollist' value: %s", _data["boollist"])
+		t.Fatalf("Unexpected component data 'boollist' value: %s", result["boollist"])
 	}
-	var intlist = _data["intlist"].([]interface{})
+	var intlist = result["intlist"].([]interface{})
 	if len(intlist) != 1 {
 		t.Fatalf("Unexpected component data 'intlist' size: %v", len(intlist))
 	}
 	if intlist[0] != 1 {
-		t.Fatalf("Unexpected component data 'intlist' value: %s", _data["intlist"])
+		t.Fatalf("Unexpected component data 'intlist' value: %s", result["intlist"])
 	}
-	var doublelist = _data["doublelist"].([]interface{})
+	var doublelist = result["doublelist"].([]interface{})
 	if len(doublelist) != 2 {
 		t.Fatalf("Unexpected component data 'doublelist' size: %v", len(doublelist))
 	}
 	if doublelist[0] != 0.7 && doublelist[1] != 1.42 {
-		t.Fatalf("Unexpected component data 'doublelist' value: %s", _data["doublelist"])
+		t.Fatalf("Unexpected component data 'doublelist' value: %s", result["doublelist"])
 	}
-	if _data["emptykey"] != nil {
-		t.Fatalf("Unexpected component data 'emptykey' value: %s", _data["emptykey"])
+	if result["emptykey"] != nil {
+		t.Fatalf("Unexpected component data 'emptykey' value: %s", result["emptykey"])
 	}
-	if _data["nestedobject"] == nil {
-		t.Fatalf("Unexpected component data 'nestedobject' value: %s", _data["nestedobject"])
+	if result["nestedobject"] == nil {
+		t.Fatalf("Unexpected component data 'nestedobject' value: %s", result["nestedobject"])
 	}
-	var nestedObj = _data["nestedobject"].(map[interface{}]interface{})
+	var nestedObj = result["nestedobject"].(map[interface{}]interface{})
 	if nestedObj["nestedkey"] != "nestedValue" {
 		t.Fatalf("Unexpected component data 'nestedkey' value: %s", nestedObj["nestedkey"])
 	}
